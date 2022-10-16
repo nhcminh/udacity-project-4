@@ -4,11 +4,11 @@
 
 # Step 1:
 # Build image and add a descriptive tag
-docker build . --tag=project-api
+docker build --tag=api .
 echo "Build Complete"
 # Step 2: 
 # List docker images
 docker image ls
 # Step 3: 
 # Run flask app
-docker run -p 8080:80 project-api
+docker run -p 8080:80 api
