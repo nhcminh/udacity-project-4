@@ -1,5 +1,34 @@
-<paste log output from Kubernetes-mediated prediction, here>
-$ kubectl logs pod/app
+# INITIAL RUN
+
+a2mrk@DESKTOP-K72EI51 MINGW64 ~/Documents/Repo/udacity-project-4/project-ml-microservice-kubernetes (master)
+$ ./run_kubernetes.sh
+pod/app created
+NAME   READY   STATUS              RESTARTS   AGE
+app    0/1     ContainerCreating   0          1s
+error: unable to forward port because pod is not running. Current status=Pending
+
+# SECOND RUN
+a2mrk@DESKTOP-K72EI51 MINGW64 ~/Documents/Repo/udacity-project-4/project-ml-microservice-kubernetes (master)
+$ ./run_kubernetes.sh
+Error from server (AlreadyExists): pods "app" already exists
+NAME   READY   STATUS    RESTARTS   AGE
+app    1/1     Running   0          2m3s
+Forwarding from 127.0.0.1:8080 -> 80
+Forwarding from [::1]:8080 -> 80
+
+# PREDICTION LOG OUTPUT
+
+a2mrk@DESKTOP-K72EI51 MINGW64 ~/Documents/Repo/udacity-project-4/project-ml-microservice-kubernetes (master)
+$ ./make_prediction.sh
+Port: 8080
+{
+  "prediction": [
+    20.35373177134412
+  ]
+}
+
+a2mrk@DESKTOP-K72EI51 MINGW64 ~/Documents/Repo/udacity-project-4/project-ml-microservice-kubernetes (master)
+$ kubectl logs pods/app
  * Serving Flask app "app" (lazy loading)
  * Environment: production
    WARNING: Do not use the development server in a production environment.
@@ -8,37 +37,15 @@ $ kubectl logs pod/app
  * Running on http://0.0.0.0:80/ (Press CTRL+C to quit)
  * Restarting with stat
  * Debugger is active!
- * Debugger PIN: 885-381-650
-[2022-10-17 04:02:33,118] INFO in app: JSON payload:
+ * Debugger PIN: 643-385-556
+[2022-10-17 06:48:08,746] INFO in app: JSON payload: 
 {'CHAS': {'0': 0}, 'RM': {'0': 6.575}, 'TAX': {'0': 296.0}, 'PTRATIO': {'0': 15.3}, 'B': {'0': 396.9}, 'LSTAT': {'0': 4.98}}
-[2022-10-17 04:02:40,003] INFO in app: Inference payload DataFrame:
+[2022-10-17 06:48:08,852] INFO in app: Inference payload DataFrame:
    CHAS     RM    TAX  PTRATIO      B  LSTAT
 0     0  6.575  296.0     15.3  396.9   4.98
-[2022-10-17 04:02:40,068] INFO in app: Scaling Payload:
+[2022-10-17 06:48:08,871] INFO in app: Scaling Payload:
    CHAS     RM    TAX  PTRATIO      B  LSTAT
 0     0  6.575  296.0     15.3  396.9   4.98
-[2022-10-17 04:02:40,406] INFO in app: output prediction:
+[2022-10-17 06:48:08,914] INFO in app: output prediction:
 [20.35373177134412]
-127.0.0.1 - - [17/Oct/2022 04:02:40] "POST /predict HTTP/1.1" 200 -
-[2022-10-17 04:08:42,320] INFO in app: JSON payload:
-{'CHAS': {'0': 0}, 'RM': {'0': 6.575}, 'TAX': {'0': 296.0}, 'PTRATIO': {'0': 15.3}, 'B': {'0': 396.9}, 'LSTAT': {'0': 4.98}}
-[2022-10-17 04:08:44,820] INFO in app: Inference payload DataFrame:
-   CHAS     RM    TAX  PTRATIO      B  LSTAT
-0     0  6.575  296.0     15.3  396.9   4.98
-[2022-10-17 04:08:44,918] INFO in app: Scaling Payload: 
-   CHAS     RM    TAX  PTRATIO      B  LSTAT
-0     0  6.575  296.0     15.3  396.9   4.98
-[2022-10-17 04:08:46,948] INFO in app: output prediction:
-[20.35373177134412]
-127.0.0.1 - - [17/Oct/2022 04:08:47] "POST /predict HTTP/1.1" 200 -
-[2022-10-17 04:08:54,999] INFO in app: JSON payload:
-{'CHAS': {'0': 0}, 'RM': {'0': 6.575}, 'TAX': {'0': 296.0}, 'PTRATIO': {'0': 15.3}, 'B': {'0': 396.9}, 'LSTAT': {'0': 4.98}}
-[2022-10-17 04:08:55,085] INFO in app: Inference payload DataFrame:
-   CHAS     RM    TAX  PTRATIO      B  LSTAT
-0     0  6.575  296.0     15.3  396.9   4.98
-[2022-10-17 04:08:55,122] INFO in app: Scaling Payload:
-   CHAS     RM    TAX  PTRATIO      B  LSTAT
-0     0  6.575  296.0     15.3  396.9   4.98
-[2022-10-17 04:08:55,133] INFO in app: output prediction:
-[20.35373177134412]
-127.0.0.1 - - [17/Oct/2022 04:08:55] "POST /predict HTTP/1.1" 200 -
+127.0.0.1 - - [17/Oct/2022 06:48:08] "POST /predict HTTP/1.1" 200 -
