@@ -17,13 +17,14 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "project-ml-microservice-kubernetes/requirements.txt" }}
+            - v1-dependencies-{{ checksum "requirements.txt" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
       - run:
           name: install dependencies
           command: |
+            cd project-ml-microservice-kubernetes
             ls
             python3 -m venv venv
             ls
