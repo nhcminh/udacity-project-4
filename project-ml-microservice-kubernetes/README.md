@@ -1,4 +1,5 @@
 <include a CircleCI status badge, here>
+[![CircleCI](https://circleci.com/gh/circleci/circleci-docs.svg?style=svg)](https://circleci.com/gh/nhcminh/udacity-project-4)
 
 ## Project Overview
 
@@ -27,11 +28,13 @@ You can find a detailed [project rubric, here](https://review.udacity.com/#!/rub
 
 * Create a virtualenv with Python 3.7 and activate it. Refer to this link for help on specifying the Python version in the virtualenv. 
 ```bash
-python3 -m pip install --user virtualenv
-# You should have Python 3.7 available in your host. 
-# Check the Python path using `which python3`
-# Use a command similar to this one:
+# Windows version
+# Installing Python 3.7.3
+# Install virtual envirorment
+python -m pip install --user virtualenv
+# Create a virtual envirorment
 python3 -m virtualenv --python=<path-to-Python3.7> .devops
+# Source into the virtual envirorment 
 source .devops/bin/activate
 ```
 * Run `make install` to install the necessary dependencies
@@ -46,5 +49,22 @@ source .devops/bin/activate
 
 * Setup and Configure Docker locally
 * Setup and Configure Kubernetes locally
-* Create Flask app in Container
+* Create Flask app in Container 
+* Before `./run_kubernetes.sh`, follow 2 steps to avoid image pull backoff error
+    - Run `minikube start`
+    - Run `minukube image pull $dockerID/path`
 * Run via kubectl
+
+### File explaination
+* `.circleci/config.yml` : config circleCI
+* `model_data` : Trained model data for housing prices in Boston
+* `output_txt_files` : Docker and Kubernetes log output
+* `app.py` : REST Endpoint for predicting housing prices in Boston
+* `Dockerfile` : Dockerfile containing the application and its dependencies
+* `make_prediction.sh` : Calls prediction REST endpoint and simulates sample prediction
+* `Makefile` : Build file of the project
+* `requirements.txt` : Python requirements
+* `run_docker.sh`: Shell script for creating and running docker container
+* `run_kubernetes.sh` : Shell script to deploy docker container on Kubernetes cluster
+* `upload_docker.sh` : Shell script for uploading locally built docker image to dockerhub repository
+
